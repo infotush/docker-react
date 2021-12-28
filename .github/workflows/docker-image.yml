@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - run: docker build -t tusharshrivastava/docker-react -f Dockerfile.dev .
-      - run: docker run -e CI=true tusharshrivastava/docker-react npm test
+      - run: docker run -e CI=true tusharshrivastava/docker-react npm test -- --coverage
 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
@@ -23,7 +23,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
           application_name: Docker-react
-          environment_name: Dockerreact-env
+          environment_name: Dockerreact-env-1
           existing_bucket_name: elasticbeanstalk-us-east-1-806867437296
           region: us-east-1
           version_label: ${{ github.sha }}
